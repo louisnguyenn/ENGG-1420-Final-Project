@@ -1,34 +1,36 @@
-class Event {
+import java.time.LocalDateTime;
+
+public class Event {
     private int eventId;
     private String title;
-    private String dateTime;
+    private LocalDateTime dateTime;
     private String location;
     private int capacity;
-    public enum Status { Active, Cancelled }    // Enum for event flags
+    public enum Status { Active, Cancelled }    // enum for event flags
     private Status status;
 
-//    Event Constructor
-    public void Event(int eventId, String title, String dateTime, String location, int capacity,
-                      status status) {
+//    event constructors
+    public Event() {
+    }
+
+    public Event(int eventId, String title, LocalDateTime dateTime, String location, int capacity,
+                      Status status) {
         setEventId(eventId);
         setTitle(title);
-        setDateTime(dateTime);
         setLocation(location);
         setCapacity(capacity);
         setStatus(Status.Active);
+
+        this.dateTime = LocalDateTime.now();    // set current time
     }
 
-//    Setter Functions
+//    setters
     public void setEventId(int eventId) {
         this.eventId = eventId;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
     }
 
     public void setLocation(String location) {
@@ -45,7 +47,7 @@ class Event {
         this.status = Status.Active;
     }
 
-//    Getter Functions
+//    getters
     public void getEventId() {
         return this.eventId;
     }
