@@ -19,9 +19,8 @@ public class Event {
         setTitle(title);
         setLocation(location);
         setCapacity(capacity);
-        setStatus(Status.Active);
-
         this.dateTime = LocalDateTime.now();    // set current time
+        this.status = Status.Active;
     }
 
 //    setters
@@ -41,10 +40,6 @@ public class Event {
         if (capacity > 0) {
             this.capacity = capacity;
         }
-    }
-
-    public void setStatus(Status status) {
-        this.status = Status.Active;
     }
 
 //    getters
