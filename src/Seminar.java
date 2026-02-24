@@ -6,7 +6,8 @@ public class Seminar extends Event {
         this.speakerName = "";
     }
 
-    public Seminar(String speakerName) {
+    public Seminar(String title, String location, int capacity, String speakerName) {
+        super(title, location, capacity);
         setSpeakerName(speakerName);
     }
 
