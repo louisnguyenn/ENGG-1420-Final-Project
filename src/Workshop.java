@@ -7,9 +7,7 @@ public class Workshop extends Event {
     }
 
     public Workshop(String title, String location, int capacity, String topic) {
-        setTitle(title);
-        setLocation(location);
-        setCapacity(capacity);
+        super(title, location, capacity);
         setTopic(topic);
     }
 
