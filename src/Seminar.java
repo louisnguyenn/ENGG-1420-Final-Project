@@ -1,4 +1,4 @@
-public class Seminar {
+public class Seminar extends Event {
     private String speakerName;
 
 //    constructors
