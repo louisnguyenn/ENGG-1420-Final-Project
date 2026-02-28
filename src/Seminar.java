@@ -7,8 +7,7 @@ public class Seminar extends Event {
     }
 
     public Seminar(String eventId, String title, LocalDateTime dateTime, String location,
-                   int capacity, Status status
-                   String speakerName) {
+                   int capacity, Status status, String speakerName) {
         super(eventId, title, dateTime, location, capacity, status);
         setSpeakerName(speakerName);
     }
@@ -21,5 +20,10 @@ public class Seminar extends Event {
 //    getter
     public void getSpeakerName() {
         return this.speakerName;
+    }
+
+    @Override
+    public void updateTypeSpecificField(String speakerName) {
+        setSpeakerName(speakerName);
     }
 }

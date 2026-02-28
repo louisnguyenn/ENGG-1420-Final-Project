@@ -7,8 +7,7 @@ public class Workshop extends Event {
     }
 
     public Workshop(String eventId, String title, LocalDateTime dateTime, String location,
-                    int capacity, Status status
-                    String topic) {
+                    int capacity, Status status, String topic) {
         super(eventId, title, dateTime, location, capacity, status);
         setTopic(topic);
     }
@@ -21,5 +20,11 @@ public class Workshop extends Event {
 //    getter
     public String getTopic() {
         return this.topic;
+    }
+
+    //     override type-specific field method
+    @Override
+    public void updateTypeSpecificField(String topic) {
+        setTopic(topic);
     }
 }
