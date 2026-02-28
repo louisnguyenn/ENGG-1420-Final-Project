@@ -2,8 +2,10 @@ public class Concert extends Event {
     private int ageRestriction;
 
 //    constructor
-    public Concert(String title, String location, int capacity, int ageRestriction) {
-        super(title, location, capacity);
+    public Concert(String eventId, String title, LocalDateTime dateTime, String location,
+                   int capacity, Status status
+                   int ageRestriction) {
+        super(eventId, title, dateTime, location, capacity, status);
         setAgeRestriction((ageRestriction));
     }
 

@@ -2,8 +2,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 public class Event {
-    private Random rand = new Random();
-    private int eventId;
+    private String eventId;
     private String title;
     private LocalDateTime dateTime;
     private String location;
@@ -15,18 +14,27 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String location, int capacity) {
+    public Event(String eventId, String title, LocalDateTime dateTime, String location,
+                 int capacity, Status status) {
+        setEventId(eventId);
         setTitle(title);
         setLocation(location);
         setCapacity(capacity);
-        this.eventId = rand.nextInt(10000);
-        this.dateTime = LocalDateTime.now();
-        this.status = Status.Active;
+        setDate(dateTime);
+        setStatus(status);
     }
 
 //    setters
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDate(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public void setLocation(String location) {
@@ -37,6 +45,10 @@ public class Event {
         if (capacity > 0) {
             this.capacity = capacity;
         }
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
 //    getters

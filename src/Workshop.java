@@ -6,8 +6,10 @@ public class Workshop extends Event {
         this.topic = "";
     }
 
-    public Workshop(String title, String location, int capacity, String topic) {
-        super(title, location, capacity);
+    public Workshop(String eventId, String title, LocalDateTime dateTime, String location,
+                    int capacity, Status status
+                    String topic) {
+        super(eventId, title, dateTime, location, capacity, status);
         setTopic(topic);
     }
 

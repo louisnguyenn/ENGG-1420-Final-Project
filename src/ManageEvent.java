@@ -3,16 +3,23 @@ import java.util.ArrayList;
 public class ManageEvent {
     private ArrayList<Event> eventList;
 
-    public ManageEvent(ArrayList<Event> events) {
-        this.eventList = new ArrayList<Event>();
+    public ManageEvent() {
+        eventList = new ArrayList<Event>();
     }
 
     public ArrayList<Event> getEvents() {
-        return new ArrayList<>(events);
+        return new ArrayList<>(eventList);
     }
 
-    public void addEvents(Event event) {
-        this.eventList.add(event);
+    public boolean addEvent(Event newEvent) {
+        for (Event event : this.eventList) {
+            if (event.getEventId().equalsIgnoreCase(newEvent.getEventId())) {
+                return false;
+            }
+        }
+        this.eventList.add(newEvent);
+
+        return true;
     }
 
     public Event searchEvent(String title) {
@@ -21,6 +28,8 @@ public class ManageEvent {
                 return event;
             }
         }
+
+        return null;
     }
 
 }
