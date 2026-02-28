@@ -1,14 +1,11 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ManageEvent {
     private ArrayList<Event> eventList;
 
     public ManageEvent() {
-        eventList = new ArrayList<Event>();
-    }
-
-    // polymorphic method: can update type-specific fields
-    public void updateTypeSpecificField(String field) {
+        eventList = new ArrayList<>();
     }
 
     public ArrayList<Event> getEvents() {
@@ -41,6 +38,27 @@ public class ManageEvent {
         }
 
         return false;
+    }
+
+    public boolean cancelEvent(String eventId) {
+        for (Event event : this.eventList) {
+            if (event.getEventId().equalsIgnoreCase(eventId)) {
+                event.setStatus(Event.Status.Cancelled);
+//                TODO: 1. cancel confirm and waitlisted bookings
+//                      2. empty waitlist
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void listEvents() {
+        for (Event event : this.eventList) {
+//            TODO: display all events with their key details
+            return;
+        }
     }
 
     public Event searchEvent(String title) {

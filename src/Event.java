@@ -14,6 +14,10 @@ public class Event {
     public Event() {
     }
 
+    // polymorphic method: can update type-specific fields
+    public void updateTypeSpecificField(String field) {
+    }
+
     public Event(String eventId, String title, LocalDateTime dateTime, String location,
                  int capacity, Status status) {
         setEventId(eventId);
@@ -52,7 +56,7 @@ public class Event {
     }
 
 //    getters
-    public int getEventId() {
+    public String getEventId() {
         return this.eventId;
     }
 

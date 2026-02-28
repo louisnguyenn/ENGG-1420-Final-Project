@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class Seminar extends Event {
     private String speakerName;
 
@@ -18,7 +20,7 @@ public class Seminar extends Event {
     }
 
 //    getter
-    public void getSpeakerName() {
+    public String getSpeakerName() {
         return this.speakerName;
     }
 

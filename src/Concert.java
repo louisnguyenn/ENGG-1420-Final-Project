@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class Concert extends Event {
     private String ageRestriction;
 
@@ -14,7 +16,7 @@ public class Concert extends Event {
     }
 
 //    getter
-    public int getAgeRestriction() {
+    public String getAgeRestriction() {
         return this.ageRestriction;
     }
 
