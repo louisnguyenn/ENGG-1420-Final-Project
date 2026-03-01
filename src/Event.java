@@ -14,7 +14,7 @@ public class Event {
     public Event() {
     }
 
-    // polymorphic method: can update type-specific fields
+    // polymorphic method: update type-specific fields
     public void updateTypeSpecificField(String field) {
     }
 
@@ -78,5 +78,13 @@ public class Event {
 
     public Status getStatus() {
         return this.status;
+    }
+
+    public void cancelEvent() {
+        setStatus(Status.Cancelled);
+
+        // TODO: cancel bookings
+
+        // TODO: cancel waitlist
     }
 }

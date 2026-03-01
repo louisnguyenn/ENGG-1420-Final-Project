@@ -8,10 +8,6 @@ public class ManageEvent {
         eventList = new ArrayList<>();
     }
 
-    public ArrayList<Event> getEvents() {
-        return new ArrayList<>(eventList);
-    }
-
     public boolean addEvent(Event newEvent) {
         for (Event event : this.eventList) {
             if (event.getEventId().equalsIgnoreCase(newEvent.getEventId())) {
@@ -43,9 +39,7 @@ public class ManageEvent {
     public boolean cancelEvent(String eventId) {
         for (Event event : this.eventList) {
             if (event.getEventId().equalsIgnoreCase(eventId)) {
-                event.setStatus(Event.Status.Cancelled);
-//                TODO: 1. cancel confirm and waitlisted bookings
-//                      2. empty waitlist
+                event.cancelEvent();
 
                 return true;
             }
@@ -54,21 +48,21 @@ public class ManageEvent {
         return false;
     }
 
-    public void listEvents() {
-        for (Event event : this.eventList) {
-//            TODO: display all events with their key details
-            return;
+    public ArrayList<Event> listEvents() {
+            return new ArrayList<>(eventList);
         }
-    }
 
-    public Event searchEvent(String title) {
-        for (Event event : this.eventList) {
-            if (event.getTitle().equalsIgnoreCase(title)) {
-                return event;
+    public ArrayList<Event> searchEvent(String title) {
+        ArrayList<Event> res = new ArrayList<Event>();
+        String query = title.toLowerCase();
+
+        for (Event event : eventList) {
+            String stringTitle =  event.getTitle().toLowerCase();
+            if (stringTitle.contains(query)) {
+                res.add(event);
             }
         }
 
-        return null;
+        return res;
     }
-
 }
