@@ -11,7 +11,15 @@ public class ManageBooking {
         for (Booking booking : this.bookings) {
             if (booking.getBookingID().equalsIgnoreCase(newBooking.getBookingID())
                     && booking.getEventID().equalsIgnoreCase(newBooking.getEventID())) {
-                return false;
+                int confirmedBookingCount = 0;
+                for (int i = booking.getNumOfBookings(); i > 0; i--){
+                    if (booking.getBookingStatus() == Booking.BookingStatus.Confirmed) {
+                        confirmedBookingCount++;
+                    }
+                }
+                if (confirmedBookingCount >= booking.getMaxBookings()){
+                    return false;
+                }
             }
         }
 

@@ -27,6 +27,8 @@ public class Booking {
         return bookingStatus;
     }
 
+    public int getNumOfBookings() { return NumOfBookings;}
+
     public void setEventID(String eventID) {
         this.eventID = eventID;
     }
@@ -47,15 +49,18 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
+    public void setNumOfBookings(int NumOfBookings) {   this.NumOfBookings = NumOfBookings; }
+
     public Booking(){
 
     }
 
-    public Booking(String bookingID, String userID, String eventID, String createdAt, BookingStatus bookingStatus){
+    public Booking(String bookingID, String userID, String eventID, String createdAt, BookingStatus bookingStatus,  int NumOfBookings) {
         this.bookingID = bookingID;
         this.userID = userID;
         this.eventID = eventID;
         this.createdAt = createdAt;
         this.bookingStatus = bookingStatus;
+        this.NumOfBookings = NumOfBookings;
     }
 }
