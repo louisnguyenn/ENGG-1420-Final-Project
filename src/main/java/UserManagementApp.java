@@ -19,7 +19,7 @@ public class UserManagementApp {
 
             System.out.print("Choose option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // clear the newline from input
+            scanner.nextLine();
 
             if (choice == 1) {
 

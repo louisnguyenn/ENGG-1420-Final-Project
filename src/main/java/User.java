@@ -31,7 +31,7 @@ public class User {
         return userType;
     }
 
-    // This method returns booking limit based on user type
+    // This method returns booking limit based on user type, will use to assist booking class
     // We use if statements instead of subclasses to keep it simple
     public int getMaxBookings() {
         if (userType.equals("student")) return 3;
