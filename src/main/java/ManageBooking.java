@@ -19,8 +19,6 @@ public class ManageBooking {
         return true;
     }
 
-    public
-
     public void bookingCancel(){
         //  this.bookingStatus = BookingStatus.Cancelled;
     }
