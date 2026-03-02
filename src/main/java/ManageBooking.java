@@ -27,9 +27,16 @@ public class ManageBooking {
         return true;
     }
 
-    public boolean bookingCancel(Booking newBooking){
-        newBooking.setBookingStatus(Booking.BookingStatus.Cancelled);
-        return true;
+    public Booking bookingCancel(Booking newBooking){
+        if (newBooking.getBookingStatus() == Booking.BookingStatus.Confirmed){
+            newBooking.setBookingStatus(Booking.BookingStatus.Cancelled);
+            return promoteNext();
+        }
+
+        else if (newBooking.getBookingStatus() == Booking.BookingStatus.Waitlisted){
+            newBooking.setBookingStatus(Booking.BookingStatus.Cancelled);
+        }
+        return null;
     }
 
     public boolean viewBooking(Booking newBooking){
