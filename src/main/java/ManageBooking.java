@@ -4,7 +4,7 @@ public class ManageBooking {
     private ArrayList<Booking> bookings;
 
     public ManageBooking(ArrayList<Booking> bookings) {
-        bookings = new ArrayList<>();
+        this.bookings = new ArrayList<>();
     }
 
     public boolean createBooking(Booking newBooking){
@@ -27,8 +27,13 @@ public class ManageBooking {
         return true;
     }
 
-    public void bookingCancel(){
-        //  this.bookingStatus = BookingStatus.Cancelled;
+    public boolean bookingCancel(Booking newBooking){
+        newBooking.setBookingStatus(Booking.BookingStatus.Cancelled);
+        return true;
+    }
+
+    public boolean viewBooking(Booking newBooking){
+
     }
 
     public void bookingView(){
