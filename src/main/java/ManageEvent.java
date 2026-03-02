@@ -5,7 +5,7 @@ public class ManageEvent {
     private ArrayList<Event> eventList;
 
     public ManageEvent() {
-        eventList = new ArrayList<>();
+        this.eventList = new ArrayList<>();
     }
 
     public boolean addEvent(Event newEvent) {
