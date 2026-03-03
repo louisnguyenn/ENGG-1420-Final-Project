@@ -19,9 +19,30 @@ public class ManageBooking {
         return true;
     }
 
-    public void bookingCancel(){
-        //  this.bookingStatus = BookingStatus.Cancelled;
+    public Booking cancelBookingAndPromote(String bookingId, Waitlist waitlist) {
+
+    for (Booking b: bookings) {
+
+        if (b.getBookingID().equalsIgnoreCase(bookingId)) {
+
+            // Check if booking was confirmed BEFORE cancelling
+            boolean wasConfirmed =
+                    b.getBookingStatus() == Booking.BookingStatus.Confirmed;
+
+            // Cancel booking
+            b.setBookingStatus(Booking.BookingStatus.Cancelled);
+
+            // If it was confirmed, promote the next person
+            if (wasConfirmed) {
+                return waitlist.promoteNext();  // 🔥 THIS CALLS YOUR METHOD
+            }
+
+            return null;
+        }
     }
+
+    return null;
+}
 
     public void bookingView(){
 
