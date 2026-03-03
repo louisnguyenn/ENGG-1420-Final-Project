@@ -34,7 +34,7 @@ public class ManageBooking {
 
             // If it was confirmed, promote the next person
             if (wasConfirmed) {
-                return waitlist.promoteNext();  // 🔥 THIS CALLS YOUR METHOD
+                return waitlist.promoteNext();  // Calls Ansh's method in Waitlist.java
             }
 
             return null;
