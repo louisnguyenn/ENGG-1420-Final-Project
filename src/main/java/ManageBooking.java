@@ -7,6 +7,7 @@ public class ManageBooking {
         this.bookings = new ArrayList<>();
     }
 
+
     public boolean createBooking(Booking newBooking){
         for (Booking booking : this.bookings) {
             if (booking.getBookingID().equalsIgnoreCase(newBooking.getBookingID())
@@ -39,8 +40,20 @@ public class ManageBooking {
         return null;
     }
 
-    public boolean viewBookings(Booking newBooking){
 
+    public ArrayList<Booking> viewUserBookings(String userID) {
+
+        ArrayList<Booking> userBookings = new ArrayList<>();
+
+        for (Booking booking : this.bookings) {
+
+            if (booking.getUserID().equalsIgnoreCase(userID)) {
+                userBookings.add(booking);
+            }
+
+        }
+
+        return userBookings;
     }
 
     public ArrayList<ArrayList<Booking>> viewEventRoster(String eventID) {
