@@ -17,7 +17,7 @@ public class ManageBooking {
                         confirmedBookingCount++;
                     }
                 }
-                if (confirmedBookingCount >= booking.getMaxBookings()){
+                if (confirmedBookingCount >= User.booking.getMaxBookings()){
                     return false;
                 }
             }
@@ -30,7 +30,7 @@ public class ManageBooking {
     public Booking bookingCancel(Booking newBooking){
         if (newBooking.getBookingStatus() == Booking.BookingStatus.Confirmed){
             newBooking.setBookingStatus(Booking.BookingStatus.Cancelled);
-            return promoteNext();
+            return Waitlist.promoteNext();
         }
 
         else if (newBooking.getBookingStatus() == Booking.BookingStatus.Waitlisted){
@@ -39,11 +39,33 @@ public class ManageBooking {
         return null;
     }
 
-    public boolean viewBooking(Booking newBooking){
+    public boolean viewBookings(Booking newBooking){
 
     }
 
-    public void bookingView(){
+    public ArrayList<ArrayList<Booking>> viewEventRoster(String eventID) {
 
+        ArrayList<Booking> confirmed = new ArrayList<>();
+        ArrayList<Booking> waitlist = new ArrayList<>();
+
+        for (Booking booking : this.bookings) {
+
+            if (booking.getEventID().equalsIgnoreCase(eventID)
+                    && booking.getBookingStatus() != Booking.BookingStatus.Cancelled) {
+
+                if (booking.getBookingStatus() == Booking.BookingStatus.Confirmed) {
+                    confirmed.add(booking);
+                }
+                else if (booking.getBookingStatus() == Booking.BookingStatus.Waitlisted) {
+                    waitlist.add(booking);
+                }
+            }
+        }
+
+        ArrayList<ArrayList<Booking>> result = new ArrayList<>();
+        result.add(confirmed);  // index 0
+        result.add(waitlist);   // index 1
+
+        return result;
     }
 }
