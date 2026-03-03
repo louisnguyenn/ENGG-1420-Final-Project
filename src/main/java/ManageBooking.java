@@ -19,22 +19,38 @@ public class ManageBooking {
         return true;
     }
 
-    public Booking cancelBookingAndPromote(String bookingId, Waitlist waitlist) {
+   public Booking cancelBookingAndPromote(String bookingId, Waitlist waitlist) {
 
     for (Booking b: bookings) {
 
         if (b.getBookingID().equalsIgnoreCase(bookingId)) {
 
-            // Check if booking was confirmed BEFORE cancelling
             boolean wasConfirmed =
-                    b.getBookingStatus() == Booking.BookingStatus.Confirmed;
+                b.getBookingStatus() == Booking.BookingStatus.Confirmed;
 
-            // Cancel booking
+            // cancel it
             b.setBookingStatus(Booking.BookingStatus.Cancelled);
 
-            // If it was confirmed, promote the next person
+            // if confirmed, promote next from waitlist
             if (wasConfirmed) {
-                return waitlist.promoteNext();  // Calls Ansh's method in Waitlist.java
+                Booking promoted = waitlist.promoteNext(); // removes from waitlist + sets Confirmed
+
+                if (promoted != null) {
+                    // add promoted to bookings list IF it's not already there
+                    boolean alreadyExists = false;
+                    for (Booking existing: bookings) {
+                        if (existing.getBookingID().equalsIgnoreCase(promoted.getBookingID())
+                                && existing.getEventID().equalsIgnoreCase(promoted.getEventID())) {
+                            alreadyExists = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyExists) {
+                        bookings.add(promoted);
+                    }
+                }
+
+                return promoted;
             }
 
             return null;
