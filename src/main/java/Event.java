@@ -8,6 +8,8 @@ public class Event {
     private int capacity;
     public enum Status { Active, Cancelled }    // enum for event flags
     private Status status;
+    ManageBooking booking = new ManageBooking();
+    ManageWaitlist waitlist = new ManageWaitlist();
 
 //    event constructors
     public Event() {
@@ -82,8 +84,10 @@ public class Event {
     public void cancelEvent() {
         setStatus(Status.Cancelled);
 
-        // TODO: cancel bookings
+        // cancel bookings
+        booking.bookingCancel();
 
-        // TODO: cancel waitlist
+        // cancel waitlist
+        waitlist.clearOnEventCancellation();
     }
 }
