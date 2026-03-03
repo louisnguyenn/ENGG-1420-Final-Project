@@ -7,7 +7,7 @@ public class ManageBooking {
         this.bookings = new ArrayList<>();
     }
 
-
+    /*
     public boolean createBooking(Booking newBooking){
         for (Booking booking : this.bookings) {
             if (booking.getBookingID().equalsIgnoreCase(newBooking.getBookingID())
@@ -23,6 +23,43 @@ public class ManageBooking {
                 }
             }
         }
+
+        this.bookings.add(newBooking);
+        return true;
+    }
+
+
+     */
+
+    public boolean createBooking(Booking newBooking, User user) {
+
+        // 1) Duplicate check: same USER cannot book same EVENT twice (unless previous is Cancelled)
+        for (Booking booking : this.bookings) {
+            if (booking.getUserID().equalsIgnoreCase(newBooking.getUserID())
+                    && booking.getEventID().equalsIgnoreCase(newBooking.getEventID())
+                    && booking.getBookingStatus() != Booking.BookingStatus.Cancelled) {
+                return false; // duplicate booking for same event
+            }
+        }
+
+        // 2) Count how many CONFIRMED bookings this user currently has
+        int confirmedBookingCount = 0;
+        for (Booking booking : this.bookings) {
+            if (booking.getUserID().equalsIgnoreCase(newBooking.getUserID())
+                    && booking.getBookingStatus() == Booking.BookingStatus.Confirmed) {
+                confirmedBookingCount++;
+            }
+        }
+
+        // 3) Max booking rule based on user type (1 / 3 / 5)
+        int maxBookings = user.getMaxBookings();
+        if (confirmedBookingCount >= maxBookings) {
+            return false;
+        }
+
+        // (Optional) If you also need capacity-based confirmed/waitlisted:
+        // If you have event capacity somewhere, you would set:
+        // newBooking.setBookingStatus(Confirmed or Waitlisted);
 
         this.bookings.add(newBooking);
         return true;
