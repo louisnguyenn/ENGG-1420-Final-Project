@@ -9,7 +9,7 @@ public class Event {
     public enum Status { Active, Cancelled }    // enum for event flags
     private Status status;
     ManageBooking booking = new ManageBooking();
-    ManageWaitlist waitlist = new ManageWaitlist();
+    Waitlist waitlist = new Waitlist();
 
 //    event constructors
     public Event() {
