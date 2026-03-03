@@ -49,6 +49,12 @@ public class MainApp extends Application {
         Scene scene = new Scene(view.getView(), 600, 400);
         primaryStage.setScene(scene);
     }
+    public void showBookingManagementView() {
+        BookingManagementView view = new BookingManagementView(this, manageBooking, waitlist);
+        Scene scene = new Scene(view.getView(), 600, 400);
+        primaryStage.setScene(scene);
+    }
 
 }
+
 
