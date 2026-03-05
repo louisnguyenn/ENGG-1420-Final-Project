@@ -1,31 +1,25 @@
-import java.time.LocalDateTime;
+package com.guelph.engg1420finalprojectjavafx;
 
 public class Seminar extends Event {
     private String speakerName;
 
-//    constructors
+    //    constructors
     public Seminar() {
         this.speakerName = "";
     }
 
-    public Seminar(String eventId, String title, LocalDateTime dateTime, String location,
-                   int capacity, Status status, String speakerName) {
-        super(eventId, title, dateTime, location, capacity, status);
+    public Seminar(String title, String location, int capacity, String speakerName) {
+        super(title, location, capacity);
         setSpeakerName(speakerName);
     }
 
-//    setter
+    //    setter
     public void setSpeakerName(String speakerName) {
         this.speakerName = speakerName;
     }
 
-//    getter
-    public String getSpeakerName() {
-        return this.speakerName;
-    }
-
-    @Override
-    public void updateTypeSpecificField(String speakerName) {
-        setSpeakerName(speakerName);
+    //    getter
+    public void getSpeakerName() {
+        // return this.speakerName;
     }
 }

@@ -1,3 +1,5 @@
+package com.guelph.engg1420finalprojectjavafx;
+
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +19,7 @@ public class ShowMainView {
         Label title = new Label("CAMPUS EVENT BOOKING SYSTEM");
         title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 
+        //Creation of horizontal box, where users will see the options in a column
         HBox buttonLayout = new HBox();
         buttonLayout.setSpacing(4);
         Button userManBtn = new Button("USER MANAGEMENT");
@@ -25,9 +28,6 @@ public class ShowMainView {
         });
 
         Button bookingManBtn = new Button("BOOKING MANAGEMENT");
-        bookingManBtn.setOnAction(e -> {
-            app.showBookingManagementView();
-        });
 
         Button eventManBtn = new Button("EVENT MANAGEMENT");
         eventManBtn.setOnAction(e->{
@@ -37,8 +37,10 @@ public class ShowMainView {
         Button waitlistManBtn = new Button("WAITLIST MANAGEMENT");
 
         buttonLayout.getChildren().addAll(userManBtn, bookingManBtn, eventManBtn, waitlistManBtn);
+        //Storing the buttons into the layout
 
         root.getChildren().addAll(title, buttonLayout);
+        //Added title and button layout to the VBox
     }
 
     public Parent getView() {
@@ -46,4 +48,3 @@ public class ShowMainView {
     }
 
 }
-

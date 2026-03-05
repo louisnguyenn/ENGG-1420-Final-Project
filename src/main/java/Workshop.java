@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+package com.guelph.engg1420finalprojectjavafx;
 
 public class Workshop extends Event {
     private String topic;
@@ -8,25 +8,18 @@ public class Workshop extends Event {
         this.topic = "";
     }
 
-    public Workshop(String eventId, String title, LocalDateTime dateTime, String location,
-                    int capacity, Status status, String topic) {
-        super(eventId, title, dateTime, location, capacity, status);
+    public Workshop(String title, String location, int capacity, String topic) {
+        super(title, location, capacity);
         setTopic(topic);
     }
 
-//    setter
+    //    setter
     public void setTopic(String topic) {
         this.topic = topic;
     }
 
-//    getter
+    //    getter
     public String getTopic() {
         return this.topic;
-    }
-
-    //     override type-specific field method
-    @Override
-    public void updateTypeSpecificField(String topic) {
-        setTopic(topic);
     }
 }

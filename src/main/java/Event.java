@@ -1,45 +1,34 @@
+package com.guelph.engg1420finalprojectjavafx;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 public class Event {
-    private String eventId;
+    private Random rand = new Random();
+    private int eventId;
     private String title;
     private LocalDateTime dateTime;
     private String location;
     private int capacity;
     public enum Status { Active, Cancelled }    // enum for event flags
     private Status status;
-    ManageBooking booking = new ManageBooking();
-    Waitlist waitlist = new Waitlist();
 
-//    event constructors
+    //    event constructors
     public Event() {
+
     }
 
-    // polymorphic method: update type-specific fields
-    public void updateTypeSpecificField(String field) {
-    }
-
-    public Event(String eventId, String title, LocalDateTime dateTime, String location,
-                 int capacity, Status status) {
-        setEventId(eventId);
+    public Event(String title, String location, int capacity) {
         setTitle(title);
         setLocation(location);
         setCapacity(capacity);
-        setDate(dateTime);
-        setStatus(status);
+        this.eventId = rand.nextInt(99999) + 9999; // always a 5 digit number
+        this.dateTime = LocalDateTime.now();
+        this.status = Status.Active;
     }
 
-//    setters
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
-    }
-
+    //    setters
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setDate(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
     }
 
     public void setLocation(String location) {
@@ -52,12 +41,8 @@ public class Event {
         }
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-//    getters
-    public String getEventId() {
+    //    getters
+    public int getEventId() {
         return this.eventId;
     }
 
@@ -81,13 +66,7 @@ public class Event {
         return this.status;
     }
 
-    public void cancelEvent() {
-        setStatus(Status.Cancelled);
-
-        // cancel bookings
-        booking.bookingCancel();
-
-        // cancel waitlist
-        waitlist.clearOnEventCancellation();
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

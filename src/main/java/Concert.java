@@ -1,26 +1,21 @@
-import java.time.LocalDateTime;
+package com.guelph.engg1420finalprojectjavafx;
 
 public class Concert extends Event {
-    private String ageRestriction;
+    private int ageRestriction;
 
-//    constructor
-    public Concert(String eventId, String title, LocalDateTime dateTime, String location,
-                   int capacity, Event.Status status, String ageRestriction) {
-        super(eventId, title, dateTime, location, capacity, status);
-        setAgeRestriction(ageRestriction);
+    //    constructor
+    public Concert(String title, String location, int capacity, int ageRestriction) {
+        super(title, location, capacity);
+        setAgeRestriction((ageRestriction));
     }
 
-//    setter
-    public void setAgeRestriction(String ageRestriction) {
+    //    setter
+    public void setAgeRestriction(int ageRestriction) {
         this.ageRestriction = ageRestriction;
     }
 
-//    getter
-    public String getAgeRestriction() {
+    //    getter
+    public int getAgeRestriction() {
         return this.ageRestriction;
-    }
-
-    public void updateTypeSpecificField(String ageRestriction) {
-        setAgeRestriction(ageRestriction);
     }
 }

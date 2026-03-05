@@ -1,68 +1,33 @@
-import java.time.LocalDateTime;
+package com.guelph.engg1420finalprojectjavafx;
+
 import java.util.ArrayList;
 
 public class ManageEvent {
-    private ArrayList<Event> eventList;
+    private ArrayList<Event> eventList; //
 
-    public ManageEvent() {
-        this.eventList = new ArrayList<>();
+    public ManageEvent(ArrayList<Event> events) {
+        this.eventList = new ArrayList<Event>();
     }
 
-    public boolean addEvent(Event newEvent) {
+    // Get events in the array list, and will return an updated arraylist
+    public ArrayList<Event> getEvents() {
+        return new ArrayList<>();
+    }
+
+    public void addEvents(Event event) {
+        this.eventList.add(event);
+    }
+
+    //Search for the events using for loop. it loops through event list
+    //Checks the title, if it finds a match with the search it will return the event
+    //No match will return null
+    public Event searchEvent(String title) {
         for (Event event : this.eventList) {
-            if (event.getEventId().equalsIgnoreCase(newEvent.getEventId())) {
-                return false;
+            if (event.getTitle().equalsIgnoreCase(title)) {
+                return event;
             }
         }
-        this.eventList.add(newEvent);
-
-        return true;
+        return null;
     }
 
-    public boolean updateEvent(String eventId, String newTitle, LocalDateTime newDateTime,
-                               String newLocation, int newCapacity, String newField) {
-        for (Event event : this.eventList) {
-            if (event.getEventId().equalsIgnoreCase(eventId)) {
-                event.setTitle(newTitle);
-                event.setDate(newDateTime);
-                event.setLocation(newLocation);
-                event.setCapacity(newCapacity);
-                event.updateTypeSpecificField(newField);
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean cancelEvent(String eventId) {
-        for (Event event : this.eventList) {
-            if (event.getEventId().equalsIgnoreCase(eventId)) {
-                event.cancelEvent();
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public ArrayList<Event> listEvents() {
-            return new ArrayList<>(eventList);
-        }
-
-    public ArrayList<Event> searchEvent(String title) {
-        ArrayList<Event> res = new ArrayList<Event>();
-        String query = title.toLowerCase();
-
-        for (Event event : eventList) {
-            String stringTitle =  event.getTitle().toLowerCase();
-            if (stringTitle.contains(query)) {
-                res.add(event);
-            }
-        }
-
-        return res;
-    }
 }
