@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class UserManagementApp {
 
-    public static void main(String[] args) {
+    public static void runConsole() {
 
         Scanner scanner = new Scanner(System.in);
         UserRegistry registry = new UserRegistry();
