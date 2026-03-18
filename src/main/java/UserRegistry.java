@@ -49,4 +49,9 @@ public class UserRegistry {
             System.out.println(u);
         }
     }
+
+    // Returns all users as a list (used by GUI)
+    public ArrayList<User> getAllUsers() {
+        return new ArrayList<>(users);
+    }
 }
