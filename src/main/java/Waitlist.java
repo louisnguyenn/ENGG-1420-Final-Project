@@ -11,6 +11,7 @@ public class Waitlist {
 
     //allows for empty, blank waitlist
     public Waitlist() {
+        this.waitlist = new ArrayList<>();
     }
 
     //allows for waitlist to have event assigned to it
@@ -20,8 +21,8 @@ public class Waitlist {
     }
 
     public boolean addToWaitlist(Booking booking) {
-        //if booking != correct event, refuse
-        if (!booking.getEventID().equalsIgnoreCase(this.eventId)) {
+        //if this waitlist has no eventId assigned, or booking doesn't match, refuse
+        if (this.eventId == null || !booking.getEventID().equalsIgnoreCase(this.eventId)) {
             return false;
         }
         //if user already in line, refuse
