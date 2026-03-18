@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 public class Seminar extends Event {
     private String speakerName;
 
-//    constructors
+    //    constructors
     public Seminar() {
         this.speakerName = "";
     }
@@ -14,12 +14,12 @@ public class Seminar extends Event {
         setSpeakerName(speakerName);
     }
 
-//    setter
+    //    setter
     public void setSpeakerName(String speakerName) {
         this.speakerName = speakerName;
     }
 
-//    getter
+    //    getter
     public String getSpeakerName() {
         return this.speakerName;
     }
@@ -27,5 +27,10 @@ public class Seminar extends Event {
     @Override
     public void updateTypeSpecificField(String speakerName) {
         setSpeakerName(speakerName);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Type: Seminar, Speaker: " + speakerName;
     }
 }
