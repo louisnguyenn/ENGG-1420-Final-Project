@@ -11,7 +11,7 @@ public class Event {
     ManageBooking booking = new ManageBooking();
     Waitlist waitlist = new Waitlist();
 
-//    event constructors
+    //    event constructors
     public Event() {
     }
 
@@ -29,7 +29,7 @@ public class Event {
         setStatus(status);
     }
 
-//    setters
+    //    setters
     public void setEventId(String eventId) {
         this.eventId = eventId;
     }
@@ -56,7 +56,7 @@ public class Event {
         this.status = status;
     }
 
-//    getters
+    //    getters
     public String getEventId() {
         return this.eventId;
     }
@@ -81,13 +81,23 @@ public class Event {
         return this.status;
     }
 
-    public void cancelEvent() {
+    public void cancelEvent(ManageBooking manageBooking, Waitlist waitlist) {
         setStatus(Status.Cancelled);
 
         // cancel bookings
-        booking.bookingCancel();
+        manageBooking.cancelAllForEvent(this.eventId);
 
         // cancel waitlist
         waitlist.clearOnEventCancellation();
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + eventId
+                + ", Title: " + title
+                + ", DateTime: " + dateTime
+                + ", Location: " + location
+                + ", Capacity: " + capacity
+                + ", Status: " + status;
     }
 }
