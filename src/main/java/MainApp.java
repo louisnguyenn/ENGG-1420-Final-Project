@@ -8,11 +8,15 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     private Stage primaryStage; // main windows of the program
     private EventController eventController;
+    private ManageBooking manageBooking;
+    private Waitlist waitlist;
 
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
         eventController = new EventController();
+        manageBooking = new ManageBooking();
+        waitlist = new Waitlist("EVENT");
 
         // show something
         showMainView();
@@ -45,5 +49,12 @@ public class MainApp extends Application {
         Scene scene = new Scene(view.getView(), 600, 400);
         primaryStage.setScene(scene);
     }
+    public void showBookingManagementView() {
+        BookingManagementView view = new BookingManagementView(this, manageBooking, waitlist);
+        Scene scene = new Scene(view.getView(), 600, 400);
+        primaryStage.setScene(scene);
+    }
 
 }
+
+

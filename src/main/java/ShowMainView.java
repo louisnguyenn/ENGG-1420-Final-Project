@@ -25,6 +25,9 @@ public class ShowMainView {
         });
 
         Button bookingManBtn = new Button("BOOKING MANAGEMENT");
+        bookingManBtn.setOnAction(e -> {
+            app.showBookingManagementView();
+        });
 
         Button eventManBtn = new Button("EVENT MANAGEMENT");
         eventManBtn.setOnAction(e->{
@@ -43,3 +46,4 @@ public class ShowMainView {
     }
 
 }
+
