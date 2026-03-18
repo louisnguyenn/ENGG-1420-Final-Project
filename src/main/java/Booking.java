@@ -5,7 +5,6 @@ public class Booking {
     private String createdAt;
     public enum BookingStatus { Confirmed, Waitlisted, Cancelled }
     private BookingStatus bookingStatus;
-    private int NumOfBookings;
 
     public String getEventID() {
         return eventID;
@@ -27,8 +26,6 @@ public class Booking {
         return bookingStatus;
     }
 
-    public int getNumOfBookings() { return NumOfBookings;}
-
     public void setEventID(String eventID) {
         this.eventID = eventID;
     }
@@ -49,18 +46,24 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
-    public void setNumOfBookings(int NumOfBookings) {   this.NumOfBookings = NumOfBookings; }
-
     public Booking(){
 
     }
 
-    public Booking(String bookingID, String userID, String eventID, String createdAt, BookingStatus bookingStatus,  int NumOfBookings) {
+    public Booking(String bookingID, String userID, String eventID, String createdAt, BookingStatus bookingStatus){
         this.bookingID = bookingID;
         this.userID = userID;
         this.eventID = eventID;
         this.createdAt = createdAt;
         this.bookingStatus = bookingStatus;
-        this.NumOfBookings = NumOfBookings;
+    }
+
+    @Override
+    public String toString() {
+        return "BookingID: " + bookingID
+                + ", UserID: " + userID
+                + ", EventID: " + eventID
+                + ", Created: " + createdAt
+                + ", Status: " + bookingStatus;
     }
 }

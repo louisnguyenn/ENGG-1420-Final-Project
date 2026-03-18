@@ -3,119 +3,157 @@ import java.util.ArrayList;
 public class ManageBooking {
     private ArrayList<Booking> bookings;
 
-    public ManageBooking(ArrayList<Booking> bookings) {
+    public ManageBooking() {
         this.bookings = new ArrayList<>();
     }
 
-    /*
-    public boolean createBooking(Booking newBooking){
-        for (Booking booking : this.bookings) {
-            if (booking.getBookingID().equalsIgnoreCase(newBooking.getBookingID())
-                    && booking.getEventID().equalsIgnoreCase(newBooking.getEventID())) {
-                int confirmedBookingCount = 0;
-                for (int i = booking.getNumOfBookings(); i > 0; i--){
-                    if (booking.getBookingStatus() == Booking.BookingStatus.Confirmed) {
-                        confirmedBookingCount++;
-                    }
-                }
-                if (confirmedBookingCount >= User.booking.getMaxBookings()){
-                    return false;
-                }
-            }
-        }
-
-        this.bookings.add(newBooking);
-        return true;
+    // Adds a pre-built Booking directly — used by DataLoader at startup
+    // Skips all rule checks since the CSV data is already validated
+    public void loadBooking(Booking booking) {
+        this.bookings.add(booking);
     }
 
+    // Creates a new booking for a user at an event
+    // Returns false if the event is cancelled, user already booked, or user is at their limit
+    public boolean createBooking(Booking newBooking, User user, Event event) {
 
-     */
+        // Event must be active to book
+        if (event.getStatus() != Event.Status.Active) {
+            return false;
+        }
 
-    public boolean createBooking(Booking newBooking, User user) {
-
-        // 1) Duplicate check: same USER cannot book same EVENT twice (unless previous is Cancelled)
+        // Check if user already has a booking for this event
         for (Booking booking : this.bookings) {
             if (booking.getUserID().equalsIgnoreCase(newBooking.getUserID())
                     && booking.getEventID().equalsIgnoreCase(newBooking.getEventID())
                     && booking.getBookingStatus() != Booking.BookingStatus.Cancelled) {
-                return false; // duplicate booking for same event
+                return false; // duplicate booking
             }
         }
 
-        // 2) Count how many CONFIRMED bookings this user currently has
-        int confirmedBookingCount = 0;
+        // Count how many confirmed bookings this user already has
+        int confirmedCount = 0;
         for (Booking booking : this.bookings) {
-            if (booking.getUserID().equalsIgnoreCase(newBooking.getUserID())
+            if (booking.getUserID().equalsIgnoreCase(user.getUserId())
                     && booking.getBookingStatus() == Booking.BookingStatus.Confirmed) {
-                confirmedBookingCount++;
+                confirmedCount++;
             }
         }
 
-        // 3) Max booking rule based on user type (1 / 3 / 5)
-        int maxBookings = user.getMaxBookings();
-        if (confirmedBookingCount >= maxBookings) {
+        // If user is at their limit, reject the booking
+        if (confirmedCount >= user.getMaxBookings()) {
             return false;
         }
 
-        // (Optional) If you also need capacity-based confirmed/waitlisted:
-        // If you have event capacity somewhere, you would set:
-        // newBooking.setBookingStatus(Confirmed or Waitlisted);
+        // Count how many confirmed seats are taken for this event
+        int confirmedForEvent = 0;
+        for (Booking booking : this.bookings) {
+            if (booking.getEventID().equalsIgnoreCase(event.getEventId())
+                    && booking.getBookingStatus() == Booking.BookingStatus.Confirmed) {
+                confirmedForEvent++;
+            }
+        }
+
+        // If event has space, confirm the booking — otherwise waitlist it
+        if (confirmedForEvent < event.getCapacity()) {
+            newBooking.setBookingStatus(Booking.BookingStatus.Confirmed);
+        } else {
+            newBooking.setBookingStatus(Booking.BookingStatus.Waitlisted);
+        }
 
         this.bookings.add(newBooking);
         return true;
     }
 
-    public Booking bookingCancel(Booking newBooking){
-        if (newBooking.getBookingStatus() == Booking.BookingStatus.Confirmed){
-            newBooking.setBookingStatus(Booking.BookingStatus.Cancelled);
-            return Waitlist.promoteNext();
+    // Cancels a booking and promotes the first waitlisted user if the booking was confirmed
+    public Booking cancelBookingAndPromote(String bookingId, Waitlist waitlist) {
+
+        for (Booking b : bookings) {
+
+            if (b.getBookingID().equalsIgnoreCase(bookingId)) {
+
+                boolean wasConfirmed =
+                        b.getBookingStatus() == Booking.BookingStatus.Confirmed;
+
+                // cancel the booking
+                b.setBookingStatus(Booking.BookingStatus.Cancelled);
+
+                // if it was confirmed, promote the next person on the waitlist
+                if (wasConfirmed) {
+                    Booking promoted = waitlist.promoteNext();
+
+                    if (promoted != null) {
+                        // add promoted booking to list if not already there
+                        boolean alreadyExists = false;
+                        for (Booking existing : bookings) {
+                            if (existing.getBookingID().equalsIgnoreCase(promoted.getBookingID())
+                                    && existing.getEventID().equalsIgnoreCase(promoted.getEventID())) {
+                                alreadyExists = true;
+                                break;
+                            }
+                        }
+                        if (!alreadyExists) {
+                            bookings.add(promoted);
+                        }
+                    }
+
+                    return promoted;
+                }
+
+                // if it was waitlisted, just remove it from the waitlist
+                waitlist.removeFromWaitlist(bookingId);
+                return null;
+            }
         }
 
-        else if (newBooking.getBookingStatus() == Booking.BookingStatus.Waitlisted){
-            newBooking.setBookingStatus(Booking.BookingStatus.Cancelled);
-        }
         return null;
     }
 
-
-    public ArrayList<Booking> viewUserBookings(String userID) {
-
-        ArrayList<Booking> userBookings = new ArrayList<>();
-
-        for (Booking booking : this.bookings) {
-
-            if (booking.getUserID().equalsIgnoreCase(userID)) {
-                userBookings.add(booking);
+    // Cancels all bookings for a given event (used when event is cancelled)
+    public void cancelAllForEvent(String eventId) {
+        for (Booking b : bookings) {
+            if (b.getEventID().equalsIgnoreCase(eventId)
+                    && b.getBookingStatus() != Booking.BookingStatus.Cancelled) {
+                b.setBookingStatus(Booking.BookingStatus.Cancelled);
             }
-
         }
-
-        return userBookings;
     }
 
-    public ArrayList<ArrayList<Booking>> viewEventRoster(String eventID) {
-
-        ArrayList<Booking> confirmed = new ArrayList<>();
-        ArrayList<Booking> waitlist = new ArrayList<>();
-
-        for (Booking booking : this.bookings) {
-
-            if (booking.getEventID().equalsIgnoreCase(eventID)
-                    && booking.getBookingStatus() != Booking.BookingStatus.Cancelled) {
-
-                if (booking.getBookingStatus() == Booking.BookingStatus.Confirmed) {
-                    confirmed.add(booking);
-                }
-                else if (booking.getBookingStatus() == Booking.BookingStatus.Waitlisted) {
-                    waitlist.add(booking);
-                }
+    // Returns all bookings for a specific user
+    public ArrayList<Booking> getBookingsByUser(String userId) {
+        ArrayList<Booking> result = new ArrayList<>();
+        for (Booking b : bookings) {
+            if (b.getUserID().equalsIgnoreCase(userId)) {
+                result.add(b);
             }
         }
-
-        ArrayList<ArrayList<Booking>> result = new ArrayList<>();
-        result.add(confirmed);  // index 0
-        result.add(waitlist);   // index 1
-
         return result;
+    }
+
+    // Returns all confirmed bookings for a specific event
+    public ArrayList<Booking> getConfirmedByEvent(String eventId) {
+        ArrayList<Booking> result = new ArrayList<>();
+        for (Booking b : bookings) {
+            if (b.getEventID().equalsIgnoreCase(eventId)
+                    && b.getBookingStatus() == Booking.BookingStatus.Confirmed) {
+                result.add(b);
+            }
+        }
+        return result;
+    }
+
+    // Finds and returns a booking by its ID
+    public Booking getBookingById(String bookingId) {
+        for (Booking b : bookings) {
+            if (b.getBookingID().equalsIgnoreCase(bookingId)) {
+                return b;
+            }
+        }
+        return null; // not found
+    }
+
+    // Returns a copy of all bookings
+    public ArrayList<Booking> getAllBookings() {
+        return new ArrayList<>(bookings);
     }
 }
