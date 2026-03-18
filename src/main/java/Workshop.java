@@ -14,19 +14,23 @@ public class Workshop extends Event {
         setTopic(topic);
     }
 
-//    setter
+    //    setter
     public void setTopic(String topic) {
         this.topic = topic;
     }
 
-//    getter
+    //    getter
     public String getTopic() {
         return this.topic;
     }
 
-    //     override type-specific field method
     @Override
     public void updateTypeSpecificField(String topic) {
         setTopic(topic);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Type: Workshop, Topic: " + topic;
     }
 }
