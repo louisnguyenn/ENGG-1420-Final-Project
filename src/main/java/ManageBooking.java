@@ -7,7 +7,7 @@ public class ManageBooking {
         this.bookings = new ArrayList<>();
     }
 
-    // Adds a pre-built Booking directly — used by DataLoader at startup
+    // Adds a pre-built Booking directly that gets used by DataLoader at startup
     // Skips all rule checks since the CSV data is already validated
     public void loadBooking(Booking booking) {
         this.bookings.add(booking);
@@ -40,7 +40,7 @@ public class ManageBooking {
             }
         }
 
-        // If user is at their limit, reject the booking
+        // If user booking limit is reached, reject the booking
         if (confirmedCount >= user.getMaxBookings()) {
             return false;
         }
@@ -54,11 +54,13 @@ public class ManageBooking {
             }
         }
 
-        // If event has space, confirm the booking — otherwise waitlist it
+        // If event has space, confirm the booking, otherwise waitlist it
         if (confirmedForEvent < event.getCapacity()) {
             newBooking.setBookingStatus(Booking.BookingStatus.Confirmed);
+            // booking confirmed if capacity not reached
         } else {
             newBooking.setBookingStatus(Booking.BookingStatus.Waitlisted);
+            // booking waitlisted if capacity is full
         }
 
         this.bookings.add(newBooking);
@@ -100,7 +102,7 @@ public class ManageBooking {
                     return promoted;
                 }
 
-                // if it was waitlisted, just remove it from the waitlist
+                // if it was waitlisted, remove it from the waitlist
                 waitlist.removeFromWaitlist(bookingId);
                 return null;
             }
@@ -109,12 +111,13 @@ public class ManageBooking {
         return null;
     }
 
-    // Cancels all bookings for a given event (used when event is cancelled)
+    // Cancels all bookings for a given event, used when event is cancelled
     public void cancelAllForEvent(String eventId) {
         for (Booking b : bookings) {
             if (b.getEventID().equalsIgnoreCase(eventId)
                     && b.getBookingStatus() != Booking.BookingStatus.Cancelled) {
                 b.setBookingStatus(Booking.BookingStatus.Cancelled);
+                // cancels the booking if not already
             }
         }
     }
@@ -125,6 +128,7 @@ public class ManageBooking {
         for (Booking b : bookings) {
             if (b.getUserID().equalsIgnoreCase(userId)) {
                 result.add(b);
+                // counts if user has a booking, by looping through all bookings
             }
         }
         return result;
@@ -137,6 +141,7 @@ public class ManageBooking {
             if (b.getEventID().equalsIgnoreCase(eventId)
                     && b.getBookingStatus() == Booking.BookingStatus.Confirmed) {
                 result.add(b);
+                // counts all confirmed bookings by looping through booking for the event
             }
         }
         return result;
