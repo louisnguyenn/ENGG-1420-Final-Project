@@ -3,9 +3,10 @@ public class Booking {
     private String bookingID;
     private String userID;
     private String createdAt;
-    public enum BookingStatus { Confirmed, Waitlisted, Cancelled }
+    public enum BookingStatus { Confirmed, Waitlisted, Cancelled } // enum for different states of a booking
     private BookingStatus bookingStatus;
 
+    // getters
     public String getEventID() {
         return eventID;
     }
@@ -26,6 +27,7 @@ public class Booking {
         return bookingStatus;
     }
 
+    // setters
     public void setEventID(String eventID) {
         this.eventID = eventID;
     }
@@ -46,10 +48,12 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
+    // default booking constructor
     public Booking(){
 
     }
 
+    // parameterized booking constructor
     public Booking(String bookingID, String userID, String eventID, String createdAt, BookingStatus bookingStatus){
         this.bookingID = bookingID;
         this.userID = userID;
