@@ -15,9 +15,10 @@ public class BookingTests {
     @BeforeEach
     public void setUp() {
 
-        userRegistry      = new UserRegistry();
-        manageBooking     = new ManageBooking();
-        waitlistRegistry  = new WaitlistRegistry();
+        // create registries for testing
+        userRegistry = new UserRegistry();
+        manageBooking = new ManageBooking();
+        waitlistRegistry = new WaitlistRegistry();
 
         // create a test event with capacity 2
         testEvent = new Workshop("E001", "Test Workshop",
