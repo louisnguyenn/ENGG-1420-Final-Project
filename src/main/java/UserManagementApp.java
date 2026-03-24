@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+// old console version of user management, we switched to the GUI but keeping this just in case
 public class UserManagementApp {
 
     public static void runConsole() {
@@ -7,7 +8,7 @@ public class UserManagementApp {
         Scanner scanner = new Scanner(System.in);
         UserRegistry registry = new UserRegistry();
 
-        boolean running = true; // controls the menu loop
+        boolean running = true;
 
         while (running) {
 
@@ -19,11 +20,11 @@ public class UserManagementApp {
 
             System.out.print("Choose option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // clear the leftover newline after the number
 
             if (choice == 1) {
 
-                // Get user info from input
+                // ask for all the info we need
                 System.out.print("Enter User ID: ");
                 String id = scanner.nextLine();
 
@@ -36,18 +37,18 @@ public class UserManagementApp {
                 System.out.print("Enter Type (student/staff/guest): ");
                 String type = scanner.nextLine().toLowerCase();
 
-                // Check if type is valid
+                // make sure they typed one of the 3 valid types
                 if (!type.equals("student") &&
                         !type.equals("staff") &&
                         !type.equals("guest")) {
 
                     System.out.println("Invalid type. Must be student, staff, or guest.");
-                    continue; // skip and go back to menu
+                    continue; // go back to the top of the menu
                 }
 
                 User user = new User(id, name, email, type);
 
-                // Try adding user
+                // addUser returns false if the id is already taken
                 boolean added = registry.addUser(user);
 
                 if (added) {
@@ -58,6 +59,7 @@ public class UserManagementApp {
             }
 
             else if (choice == 2) {
+                // just print everyone in the registry
                 registry.listUsers();
             }
 
@@ -76,7 +78,8 @@ public class UserManagementApp {
             }
 
             else if (choice == 4) {
-                running = false; // stop the loop
+                // user wants to quit, stop the loop
+                running = false;
             }
 
             else {
@@ -84,6 +87,6 @@ public class UserManagementApp {
             }
         }
 
-        scanner.close(); // close scanner at end
+        scanner.close();
     }
 }

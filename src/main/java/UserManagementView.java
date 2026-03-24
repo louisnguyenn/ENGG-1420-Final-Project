@@ -13,7 +13,7 @@ public class UserManagementView {
 
     private VBox root;
 
-    public UserManagementView(MainApp app, UserRegistry registry) {
+    public UserManagementView(MainApp app, UserRegistry registry, ManageBooking manageBooking) {
         root = new VBox();
         root.setSpacing(10);
         root.setStyle("-fx-padding: 15");
@@ -109,7 +109,33 @@ public class UserManagementView {
 
             User found = registry.getUserById(searchIdField.getText().trim());
             if (found != null) {
-                detailResult.setText(found.toString());
+
+                // Show user info
+                String output = found.toString() + "\n";
+
+                // Show a summary of their current confirmed bookings
+                ArrayList<Booking> userBookings = manageBooking.getBookingsByUser(found.getUserId());
+
+                int confirmedCount = 0;
+                for (Booking b : userBookings) {
+                    if (b.getBookingStatus() == Booking.BookingStatus.Confirmed) {
+                        confirmedCount++;
+                    }
+                }
+
+                output += "Confirmed Bookings: " + confirmedCount + " / " + found.getMaxBookings();
+                output += "\n--- Booking History ---\n";
+
+                if (userBookings.isEmpty()) {
+                    output += "No bookings found.";
+                } else {
+                    for (Booking b : userBookings) {
+                        output += b.toString() + "\n";
+                    }
+                }
+
+                detailResult.setText(output.trim());
+
             } else {
                 detailResult.setText("User not found.");
             }
