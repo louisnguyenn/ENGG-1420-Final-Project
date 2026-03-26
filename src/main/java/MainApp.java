@@ -14,10 +14,10 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-        userRegistry      = new UserRegistry();
-        eventController   = new EventController();
-        manageBooking     = new ManageBooking();
-        waitlistRegistry  = new WaitlistRegistry();
+        userRegistry = new UserRegistry();
+        eventController = new EventController();
+        manageBooking = new ManageBooking();
+        waitlistRegistry = new WaitlistRegistry();
 
         // Load the starter CSV files into the system
         DataLoader.loadAll(userRegistry, eventController, manageBooking, waitlistRegistry);
